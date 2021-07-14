@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vueEditorMd from '../index.js'
+import vueEditorMdWrap from '../index.js'
 
-Vue.use(vueEditorMd)
+Vue.use(vueEditorMdWrap)
 
 new Vue({
   el: '#app',

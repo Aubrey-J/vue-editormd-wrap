@@ -2,13 +2,13 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/main.js', // dev 测试页面入口
-  // entry: './index.js', // build 发布插件入口
+  // entry: './src/main.js', // dev 测试页面入口
+  entry: './index.js', // build 发布插件入口
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'vueEditorMd.js',
-    library: 'VueEditorMd', // require时的模块名
+    filename: 'vueEditorMdWrap.js',
+    library: 'vueEditorMdWrap', // require时的模块名
     libraryTarget: 'umd', //生成不同umd的代码
     umdNamedDefine: true
   },

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h2>Vue Editor MD Component</h2>
+    <h2>Vue Editor Wrap MD Component</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'vueEditorMd',
+  name: 'vueEditorMdWrap',
   data () {
     return {
     }

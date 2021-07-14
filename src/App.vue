@@ -3,7 +3,7 @@
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
     <!-- 使用插件 -->
-    <editorMd></editorMd>
+    <editorMdWrap></editorMdWrap>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Vue EditorMd App'
+      msg: 'Welcome to Vue EditorMd Wrap App'
     }
   }
 }

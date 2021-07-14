@@ -1,18 +1,12 @@
-# vue-editor-md
+# vue-editormd-wrap
 
-> A Vue EditorMd project Power By editor.md
+> A Vue EditorMd Wrap project Power By editor.md
 
-## Build Setup
+# 安装
+npm install --save vue-editormd-wrap
 
-``` bash
-# install dependencies
-npm install
+## template
 
-# serve with hot reload at localhost:8080
-npm run dev
+## script
 
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 依赖项目
