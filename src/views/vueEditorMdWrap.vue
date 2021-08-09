@@ -1,89 +1,91 @@
 <template>
   <div>
-    <link rel="stylesheet" href="/static/editor-md/css/editormd.min.css"/>
+    <!-- 编辑器 样式 -->
+    <link rel="stylesheet" href="../../static/editor-md/css/editormd.min.css"/>
+    <!-- 编辑器 -->
     <div :id="editorId"></div>
   </div>
 </template>
 
 <script>
-import scriptjs from 'scriptjs';
-import editorMdConfig from '../config/editor-md-config.js';
+import $scriptjs from 'scriptjs'
+import editorMdConfig from '../config/editor-md-config.js'
+
 export default {
   name: 'vueEditorMdWrap',
   props: {
-      editorId: {
-          'type': String,
-          'default': 'markdown-editor',
-      },
-      onchange: { // 内容改变时回调，返回（html, markdown, text）
-          type: Function
-      },
-      config: { // 编辑器配置
-          type: Object
-      },
-      initData: {
-          'type': String
-      },
-      initDataDelay: {
-          'type': Number, // 延迟初始化数据时间，单位毫秒
-          'default': 0
-      }
+    editorId: {
+      'type': String,
+      'default': 'markdown-editor'
+    },
+    onchange: { // 内容改变时回调，返回（html, markdown, text）
+      type: Function
+    },
+    config: { // 编辑器配置
+      type: Object
+    },
+    initData: {
+      'type': String
+    },
+    initDataDelay: {
+      'type': Number, // 延迟初始化数据时间，单位毫秒
+      'default': 0
+    }
   },
   data () {
-      return {
-          editor: null,
-          editorLoaded: false,
-      };
+    return {
+      editor: null,
+      editorLoaded: false
+    }
   },
   methods: {
-      fetchScript: function(url) {
-          return new Promise((resolve) => {
-              scriptjs(url, () => {
-                  resolve();
-              });
-          });
-      },
-      getConfig: function () {
-          return {...editorMdConfig, ...this.config };
-      },
-      initEditor: function () {
-          (async () => {
-              await this.fetchScript('/static/editor-md/jquery-3.6.0.min.js');
-              await this.fetchScript('/static/editor-md/editormd.min.js');
-              // await this.fetchScript('/static/editor-md/editormd.js');
-              this.$nextTick(() => {
-                  let editor = window.editormd(this.editorId, this.getConfig());
-                  editor.on('load', () => {
-                      setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题
-                          this.editorLoaded = true;
-                          this.initData && editor.setMarkdown(this.initData);
-                      }, this.initDataDelay);
-                  });
-                  this.onchange && editor.on('change', () => {
-                      let html = editor.getPreviewedHTML();
-                      this.onchange({
-                          markdown: editor.getMarkdown(),
-                          html: html,
-                          text: window.$(html).text()
-                      });
-                  });
-                  this.editor = editor;
-              });
-          })();
+    // 加载相关js
+    fetchScript: async function () {
+      console.log('准备加载相关js')
+      return new Promise((resolve) => {
+        $scriptjs(['../../static/editor-md/jquery-3.6.0.min.js', '../../static/editor-md/zepto.min.js', '../../static/editor-md/editormd.min.js'], () => {
+          console.log('完成加载相关js')
+          resolve()
+        })
+      })
+    },
+    getConfig: function () {
+      return {
+        ...editorMdConfig,
+        ...this.config
       }
+    },
+    initEditor: function () {
+      this.fetchScript().then((res) => {
+        console.log('加载相关js后开始初始化实例')
+        let editor = window.editormd(this.editorId, this.getConfig())
+        editor.on('load', () => {
+          setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题
+            this.editorLoaded = true
+            this.initData && editor.setMarkdown(this.initData)
+          }, this.initDataDelay)
+        })
+        this.onchange && editor.on('change', () => {
+          let html = editor.getPreviewedHTML()
+          this.onchange({
+            markdown: editor.getMarkdown(),
+            html: html,
+            text: window.$(html).text()
+          })
+        })
+        this.editor = editor
+      })
+    }
   },
-  mounted: function() {
-      this.initEditor();
+  mounted: function () {
+    this.initEditor()
   },
   watch: {
-      'initData': function (newVal) {
-          if(newVal) {
-              this.editorLoaded && this.editor.setMarkdown(newVal);
-          }
+    'initData': function (newVal) {
+      if (newVal) {
+        this.editorLoaded && this.editor.setMarkdown(newVal)
       }
+    }
   }
 }
 </script>
-
-<style lang="scss">
-</style>
