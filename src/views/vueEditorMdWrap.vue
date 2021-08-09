@@ -41,11 +41,14 @@ export default {
   methods: {
     // 加载相关js
     fetchScript: async function () {
-      console.log('准备加载相关js')
       return new Promise((resolve) => {
-        $scriptjs(['../../static/editor-md/jquery-3.6.0.min.js', '../../static/editor-md/zepto.min.js', '../../static/editor-md/editormd.min.js'], () => {
-          console.log('完成加载相关js')
-          resolve()
+        // 按序加载js
+        $scriptjs('../../static/editor-md/jquery-3.6.0.min.js', function () {
+          $scriptjs('../../static/editor-md/zepto.min.js', function () {
+            $scriptjs('../../static/editor-md/editormd.min.js', function () {
+              resolve()
+            })
+          })
         })
       })
     },
@@ -57,23 +60,24 @@ export default {
     },
     initEditor: function () {
       this.fetchScript().then((res) => {
-        console.log('加载相关js后开始初始化实例')
-        let editor = window.editormd(this.editorId, this.getConfig())
-        editor.on('load', () => {
-          setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题
-            this.editorLoaded = true
-            this.initData && editor.setMarkdown(this.initData)
-          }, this.initDataDelay)
-        })
-        this.onchange && editor.on('change', () => {
-          let html = editor.getPreviewedHTML()
-          this.onchange({
-            markdown: editor.getMarkdown(),
-            html: html,
-            text: window.$(html).text()
+        this.$nextTick(() => {
+          let editor = window.editormd(this.editorId, this.getConfig())
+          editor.on('load', () => {
+            setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题
+              this.editorLoaded = true
+              this.initData && editor.setMarkdown(this.initData)
+            }, this.initDataDelay)
           })
+          this.onchange && editor.on('change', () => {
+            let html = editor.getPreviewedHTML()
+            this.onchange({
+              markdown: editor.getMarkdown(),
+              html: html,
+              text: window.$(html).text()
+            })
+          })
+          this.editor = editor
         })
-        this.editor = editor
       })
     }
   },
