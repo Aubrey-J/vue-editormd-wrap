@@ -3,7 +3,7 @@
     <!-- 编辑器 样式 -->
     <link rel="stylesheet" href="../../static/editor-md/css/editormd.min.css"/>
     <!-- 编辑器 -->
-    <div ref="container" :id="editorId" class="editor-container">
+    <div ref="container" :id="editorId" :class="editorContainerClass">
       <textarea style="display:none;" v-model="value"></textarea>
     </div>
     <div id="sidebar" v-if="this.previewForHtml && this.previewForHtml.showContext && this.previewForHtml.showExtendToc">
@@ -58,6 +58,13 @@ export default {
     }
   },
   computed: {
+    editorContainerClass () {
+      if (this.previewForHtml && this.previewForHtml.showContext && this.previewForHtml.showExtendToc) {
+        return 'editor-container'
+      } else {
+        return ''
+      }
+    }
   },
   watch: {
     value: {
