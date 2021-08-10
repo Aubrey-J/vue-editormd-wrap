@@ -17,8 +17,20 @@ https://github.com/Aubrey-J/vue-editormd-wrap
 中static下的editor-md文件夹放到项目中的static下，如静态资源路径不同，请参考下面配置的修改，以保证使用正常
 ## 使用
 ### 全局组件注册
-```JavaScript
+```javascript
 import vueEditorMdWrap from 'vue-editormd-wrap'
+
+// 注册时可以声明全局配置，如图片上传路径，免得后续使用时每个页面引用都需要设置
+// VueEditorMdWrap.props.syncRoll.default = false // 非对象类型直接赋值，不用函数
+VueEditorMdWrap.props.config.default = () => {
+  return {
+    imageUpload: true,
+    imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
+    imageUploadURL: './upload',
+    crossDomainUpload: false
+    // uploadCallbackURL: ''
+  }
+}
 
 Vue.component('editorMdWrap', VueEditorMdWrap)
 ```
@@ -59,12 +71,20 @@ editor.getPreviewedHTML();  // 获取预览窗口里的 HTML，在开启 watch �
 
 > 2、图片上传配置，使用的话需要覆盖配置
 ```javascript
+// 可以再注册全局组件时，声明全局配置，见上面使用说明
 {
-  imageUpload: true,
-  imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
-  imageUploadURL: './upload',
-  crossDomainUpload: true,
-  uploadCallbackURL: ''
+  imageUpload: true, // 是否支持上传图片
+  imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'], // 支持类型
+  imageUploadURL: './upload', // 上传接口地址
+  crossDomainUpload: true, // 是否跨域
+  uploadCallbackURL: '' // 跨域的回调地址
+}
+
+// 上传接口响应的消息结构要求如下，编辑器会自动接收响应的消息
+{
+    success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
+    message : "提示的信息，上传成功或上传失败及错误信息等。",
+    url     : "图片地址"        // 上传成功时才返回
 }
 ```
 ## Config 参考
