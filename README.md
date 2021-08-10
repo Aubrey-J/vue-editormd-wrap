@@ -1,8 +1,10 @@
 # vue-editormd-wrap
 
-- A Vue EditorMd Wrap project Power By editor.md
+- `A Vue EditorMd Wrap project Power By editor.md`
 - 因为editor.md没有支持Vue，所以封装了此工具上传到npm使用，便于使用
 - 项目处于初期阶段，会有很多问题，深感抱歉，有问题GitHub留言即可
+
+-  editor.md官网：http://editor.md.ipandao.com/
 ## 安装
 ````shell
 npm i vue-editormd-wrap
