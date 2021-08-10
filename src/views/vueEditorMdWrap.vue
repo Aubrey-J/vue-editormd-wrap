@@ -66,10 +66,11 @@ export default {
     }
   },
   watch: {
+    // v-model回调子组件赋值，相同值不赋值防止输入抖动
     value: {
       handler: function (newVal) {
         if (this.editorLoaded && newVal) {
-          this.editor.setMarkdown(newVal)
+          newVal === this.editor.getMarkdown() || this.editor.setMarkdown(newVal || '')
         }
       },
       immediate: true
@@ -199,6 +200,15 @@ export default {
 
           if (this.editor) {
             this.editorLoaded = true
+            // 初始赋值
+            setTimeout(() => {
+              this.editor.setMarkdown(this.value || '')
+            }, 1000)
+            // 监听input时间 绑定model
+            this.$refs.container.addEventListener('input', (a) => {
+              this.$emit('input', this.editor.getMarkdown())
+            })
+            // 实例化完成事件
             this.$emit('ready', this.editor)
           }
         })

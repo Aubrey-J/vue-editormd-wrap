@@ -1,6 +1,8 @@
 # vue-editormd-wrap
 
 - `A Vue EditorMd Wrap project Power By editor.md`
+# `VUE + editor.MD` v-model数据双向绑定，多编辑器共存
+
 - 因为editor.md没有支持Vue，所以封装了此工具上传到npm使用，便于使用
 - 项目处于初期阶段，会有很多问题，深感抱歉，有问题GitHub留言即可
 
@@ -29,7 +31,7 @@ Vue.component('editorMdWrap', VueEditorMdWrap)
 |  属性 | 说明  | 默认  |
 | ------------ | ------------ | ------------ |
 | editorId  | 编辑器标签ID  |  'mdEditor_' + 8位随机字符 |
-| v-model  |  编辑器内容（Markdown格式） |   |
+| v-model  |  编辑器内容（Markdown格式）双向绑定 |   |
 |  config | 编辑器配置 |  见下文 |
 |  syncRoll | 是否同步滚动 <br>可选：true、false、"single" => editor area sync  | true |
 |  watch | 是否实时预览  | true  |

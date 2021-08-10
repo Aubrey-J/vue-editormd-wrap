@@ -4,7 +4,7 @@
     <!-- 使用编辑器 -->
     <button @click="getContext">Get Markdown</button>
     <editorMdWrap v-model="context" :onlyRead="onlyRead" :syncRoll="syncRoll" :themeConfig="themeConfig" :watch="watch" @ready="ready1"></editorMdWrap>
-    <editorMdWrap editorId="two" v-model="context2" @ready="ready2" :previewForHtml="previewForHtml"></editorMdWrap>
+    <editorMdWrap editorId="two" v-model="context2" @ready="ready2"></editorMdWrap>
   </div>
 </template>
 
