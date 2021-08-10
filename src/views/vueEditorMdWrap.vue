@@ -43,9 +43,8 @@ export default {
       type: Boolean,
       default: false
     },
-    theme: {
-      type: String,
-      default: 'default' // "default | dark"
+    themeConfig: {
+      type: Object // { theme: "default\dark", editorTheme: 'night', previewTheme: "default\dark" }
     },
     previewForHtml: {
       type: Object // { showContext: true, showToc: true, showExtendToc: true }
@@ -77,7 +76,7 @@ export default {
     },
     syncRoll: {
       handler: function (newVal) {
-        if (this.editorLoaded && newVal) {
+        if (this.editorLoaded) {
           this.editor.config('syncScrolling', newVal)
         }
       },
@@ -85,7 +84,7 @@ export default {
     },
     watch: {
       handler: function (newVal) {
-        if (this.editorLoaded && newVal) {
+        if (this.editorLoaded) {
           this.editor.config('watch', newVal)
         }
       },
@@ -93,18 +92,18 @@ export default {
     },
     onlyRead: {
       handler: function (newVal) {
-        if (this.editorLoaded && newVal) {
+        if (this.editorLoaded) {
           this.editor.config('readOnly', newVal)
         }
       },
       immediate: true
     },
-    theme: {
+    themeConfig: {
       handler: function (newVal) {
         if (this.editorLoaded && newVal) {
-          this.editor.setTheme(newVal)
-          // this.editor.setEditorTheme(newVal)
-          // this.editor.setPreviewTheme(newVal)
+          this.editor.setTheme(newVal.theme)
+          this.editor.setEditorTheme(newVal.editorTheme)
+          this.editor.setPreviewTheme(newVal.previewTheme)
         }
       },
       immediate: true
@@ -140,10 +139,31 @@ export default {
       })
     },
     getConfig: function () {
-      return {
+      // 合并传入配置
+      let allConfig = {
         ...editorMdConfig,
         ...this.config
       }
+      // 首次初始化加载传入属性的配置
+      if (this.syncRoll) {
+        allConfig.syncScrolling = this.syncRoll
+      }
+      if (this.watch) {
+        allConfig.watch = this.watch
+      }
+      if (this.onlyRead) {
+        allConfig.readOnly = this.onlyRead
+      }
+      if (this.themeConfig && this.themeConfig.theme) {
+        allConfig.theme = this.themeConfig.theme
+      }
+      if (this.themeConfig && this.themeConfig.editorTheme) {
+        allConfig.editorTheme = this.themeConfig.editorTheme
+      }
+      if (this.themeConfig && this.themeConfig.previewTheme) {
+        allConfig.previewTheme = this.themeConfig.previewTheme
+      }
+      return allConfig
     },
     initEditor: function () {
       this.fetchScript().then((res) => {
@@ -178,6 +198,7 @@ export default {
           }
 
           if (this.editor) {
+            this.editorLoaded = true
             this.$emit('ready', this.editor)
           }
         })

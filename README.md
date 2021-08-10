@@ -31,15 +31,26 @@ Vue.component('editorMdWrap', VueEditorMdWrap)
 | editorId  | 编辑器标签ID  |  'mdEditor_' + 8位随机字符 |
 | v-model  |  编辑器内容（Markdown格式） |   |
 |  config | 编辑器配置 |  见下文 |
-|  syncRoll | 是否同步滚动 可选：true、false、single => editor area sync  | true |
+|  syncRoll | 是否同步滚动 <br>可选：true、false、"single" => editor area sync  | true |
 |  watch | 是否实时预览  | true  |
 | onlyRead  | 编辑窗口是否只读  | false  |
-|  theme |  主题 可选：default、dark | default |
-|  previewForHtml | 非编辑状态 HTML格式预览 格式：{ showContext: true, showToc: true, showExtendToc: true }，使用时会覆盖其他配置，仅为浏览状态 |   |
+|  themeConfig |  主题<br>格式：{ theme: "default", editorTheme: 'night', previewTheme: "default" }<br>theme、previewTheme可选：default、dark <br> editorTheme可选：default\ambiance\ambiance-mobile\eclipse\elegant\erlang-dark……更多请参考 http://editor.md.ipandao.com/examples/themes.html | default |
+|  previewForHtml | 非编辑状态 HTML格式预览 <br> 格式：{ showContext: true, showToc: true, showExtendToc: true } <br> 使用时会覆盖其他配置，仅为浏览状态 |   |
 
 |  事件 | 说明  | 参数  |
-| ------------ | ------------ | ------------ |
+| ------- | ------------ | ------------ |
 | ready  |  编辑器实例完成后回调，绑定一个方法，回调参数为编辑器实例 | editor  |
+
+### 常用方法
+更多方法及说明，请参考官网 http://editor.md.ipandao.com/examples/index.html
+```javascript
+// 更新配置的值
+editor.config("syncScrolling", true);
+// 通过实例获取当前编辑器的值
+editor.getMarkdown();       // 获取 Markdown 源码
+editor.getHTML();           // 获取 Textarea 保存的 HTML 源码
+editor.getPreviewedHTML();  // 获取预览窗口里的 HTML，在开启 watch 且没有开启 saveHTMLToTextarea 时使用
+```
 
 ### 特殊说明
 > 1、如果静态资源不在/static/editor-md下，必须使用path配置覆盖默认配置，配置为：静态资源路径/lib/，如：/static/editor-md/lib/
