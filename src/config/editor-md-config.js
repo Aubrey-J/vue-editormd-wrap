@@ -1,5 +1,5 @@
 export default {
-  mode: 'gfm', // gfm or markdown
+  mode: 'markdown', // gfm or markdown
   name: '', // Form element name
   value: '', // value for CodeMirror, if mode not gfm/markdown
   theme: '', // Editor.md self themes, before v1.5.0 is CodeMirror theme, default empty
@@ -7,7 +7,7 @@ export default {
   previewTheme: '', // Preview area theme, default empty
   markdown: '', // Markdown source code
   appendMarkdown: '', // if in init textarea value not empty, append markdown to textarea
-  width: '90%',
+  width: '100%',
   height: '640px',
   path: '/static/editor-md/lib/', // Dependents module file directory
   pluginPath: '', // If this empty, default use settings.path + "../plugins/"
@@ -67,7 +67,7 @@ export default {
   tocDropdown: false,
   tocContainer: '',
   tocStartLevel: 1, // Said from H1 to create ToC
-  htmlDecode: false, // Open the HTML tag identification
+  htmlDecode: true, // Open the HTML tag identification
   pageBreak: true, // Enable parse page break [========]
   atLink: true, // for @link
   emailLink: true, // for email address auto link

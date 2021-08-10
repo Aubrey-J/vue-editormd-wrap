@@ -1,20 +1,131 @@
 # vue-editormd-wrap
 
 - A Vue EditorMd Wrap project Power By editor.md
-- 项目正在build阶段，会有很多问题，深感抱歉，有问题GitHub留言即可
-# 安装
+- 因为editor.md没有支持Vue，所以封装了此工具上传到npm使用，便于使用
+- 项目处于初期阶段，会有很多问题，深感抱歉，有问题GitHub留言即可
+## 安装
+````shell
 npm i vue-editormd-wrap
+````
 
-# 导入静态资源
-https://github.com/Aubrey-J/vue-editormd-wrap中static下的editor-md放到项目中的static下
-# 使用
-main.js
+## 导入静态资源
+https://github.com/Aubrey-J/vue-editormd-wrap
+中static下的editor-md文件夹放到项目中的static下，如静态资源路径不同，请参考下面配置的修改，以保证使用正常
+## 使用
+### 全局组件注册
 ```JavaScript
 import vueEditorMdWrap from 'vue-editormd-wrap'
 
 Vue.component('editorMdWrap', VueEditorMdWrap)
 ```
-vue page
+### vue page使用组件
 ```javascript
 <editorMdWrap></editorMdWrap>
+```
+
+## 配置说明
+|  属性 | 说明  | 默认  |
+| ------------ | ------------ | ------------ |
+| editorId  | 编辑器标签ID  |  'mdEditor_' + 8位随机字符 |
+| v-model  |  编辑器内容（Markdown格式） |   |
+|  config | 编辑器配置 |  见下文 |
+|  syncRoll | 是否同步滚动 可选：true、false、single => editor area sync  | true |
+|  watch | 是否实时预览  | true  |
+| onlyRead  | 编辑窗口是否只读  | false  |
+|  theme |  主题 可选：default、dark | default |
+|  previewForHtml | 非编辑状态 HTML格式预览 格式：{ showContext: true, showToc: true, showExtendToc: true }，使用时会覆盖其他配置，仅为浏览状态 |   |
+
+|  事件 | 说明  | 参数  |
+| ------------ | ------------ | ------------ |
+| ready  |  编辑器实例完成后回调，绑定一个方法，回调参数为编辑器实例 | editor  |
+
+### 特殊说明
+> 1、如果静态资源不在/static/editor-md下，必须使用path配置覆盖默认配置，配置为：静态资源路径/lib/，如：/static/editor-md/lib/
+
+> 2、图片上传配置，使用的话需要覆盖配置
+```javascript
+{
+  imageUpload: true,
+  imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
+  imageUploadURL: './upload',
+  crossDomainUpload: true,
+  uploadCallbackURL: ''
+}
+```
+## Config 参考
+```javascript
+{
+  mode: 'markdown', // gfm or markdown
+  name: '', // Form element name
+  value: '', // value for CodeMirror, if mode not gfm/markdown
+  theme: '', // Editor.md self themes, before v1.5.0 is CodeMirror theme, default empty
+  editorTheme: 'default', // Editor area, this is CodeMirror theme at v1.5.0
+  previewTheme: '', // Preview area theme, default empty
+  markdown: '', // Markdown source code
+  appendMarkdown: '', // if in init textarea value not empty, append markdown to textarea
+  width: '100%',
+  height: '640px',
+  path: '/static/editor-md/lib/', // Dependents module file directory
+  pluginPath: '', // If this empty, default use settings.path + "../plugins/"
+  delay: 300, // Delay parse markdown to html, Uint : ms
+  autoLoadModules: true, // Automatic load dependent module files
+  watch: true,
+  placeholder: 'Enjoy Markdown! coding now...',
+  gotoLine: true,
+  codeFold: false,
+  autoHeight: false,
+  autoFocus: true,
+  autoCloseTags: true,
+  searchReplace: true,
+  syncScrolling: true, // true | false | "single", default true
+  readOnly: false,
+  tabSize: 4,
+  indentUnit: 4,
+  lineNumbers: true,
+  lineWrapping: true,
+  autoCloseBrackets: true,
+  showTrailingSpace: true,
+  matchBrackets: true,
+  indentWithTabs: true,
+  styleSelectedText: true,
+  matchWordHighlight: true, // options: true, false, "onselected"
+  styleActiveLine: true, // Highlight the current line
+  dialogLockScreen: true,
+  dialogShowMask: true,
+  dialogDraggable: true,
+  dialogMaskBgColor: '#fff',
+  dialogMaskOpacity: 0.1,
+  fontSize: '13px',
+  saveHTMLToTextarea: false,
+  disabledKeyMaps: [],
+
+  imageUpload: true,
+  imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
+  imageUploadURL: '',
+  crossDomainUpload: true,
+  uploadCallbackURL: '',
+
+  toc: true, // Table of contents
+  tocm: true, // Using [TOCM], auto create ToC dropdown menu
+  tocTitle: '', // for ToC dropdown menu btn
+  tocDropdown: false,
+  tocContainer: '',
+  tocStartLevel: 1, // Said from H1 to create ToC
+  htmlDecode: true, // Open the HTML tag identification
+  pageBreak: true, // Enable parse page break [========]
+  atLink: true, // for @link
+  emailLink: true, // for email address auto link
+  taskList: true, // Enable Github Flavored Markdown task lists
+  emoji: true, // :emoji: , Support Github emoji, Twitter Emoji (Twemoji);
+  // Support FontAwesome icon emoji :fa-xxx: > Using fontAwesome icon web fonts;
+  // Support Editor.md logo icon emoji :editormd-logo: :editormd-logo-1x: > 1~8x;
+  tex: true, // TeX(LaTeX), based on KaTeX
+  flowChart: true, // flowChart.js only support IE9+
+  sequenceDiagram: true, // sequenceDiagram.js only support IE9+
+  previewCodeHighlight: true,
+
+  toolbar: true, // show/hide toolbar
+  toolbarAutoFixed: true, // on window scroll auto fixed position
+  toolbarIcons: 'full'
+}
 ```
