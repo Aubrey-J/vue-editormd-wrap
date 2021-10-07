@@ -1,7 +1,12 @@
-import vueEditorMdWrap from './vueEditorMdWrap.vue' // 导入组件
+import vueEditorMdWrap from './views/vueEditorMdWrap.vue' // 导入组件
+import _Vue from 'vue'
+
 const editorMdWrap = {
   // 提供install方法给vue
   install (Vue, options) {
+    if (!Vue) {
+      window.Vue = Vue = _Vue
+    }
     // 注册组件
     Vue.component('editorMdWrap', vueEditorMdWrap)
   }

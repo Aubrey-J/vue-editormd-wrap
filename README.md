@@ -24,6 +24,8 @@ import vueEditorMdWrap from 'vue-editormd-wrap'
 // VueEditorMdWrap.props.syncRoll.default = false // 非对象类型直接赋值，不用函数
 VueEditorMdWrap.props.config.default = () => {
   return {
+    // 生产环境有子路径访问不到，需要使用.开头增加项目路径从项目当前路径访问
+    path: './static/editor-md/lib/', // Dependents module file directory
     imageUpload: true,
     imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
     imageUploadURL: './upload',
