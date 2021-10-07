@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import vueEditorMdWrap from './views'
+import vueEditorMdWrap from './index.js'
 
 Vue.use(vueEditorMdWrap)
 
