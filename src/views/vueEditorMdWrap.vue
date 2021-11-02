@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 编辑器 样式 -->
-    <link rel="stylesheet" href="../../static/editor-md/css/editormd.min.css"/>
+    <link rel="stylesheet" href="./static/editor-md/css/editormd.min.css"/>
     <!-- 编辑器 -->
     <div ref="container" :id="editorId" :class="editorContainerClass">
       <textarea style="display:none;" v-model="value"></textarea>
@@ -115,7 +115,7 @@ export default {
     fetchScript: async function () {
       return new Promise((resolve) => {
         // 按序加载js
-        $scriptjs.path('../../static/editor-md/')
+        $scriptjs.path('./static/editor-md/')
         $scriptjs('jquery-3.6.0.min.js', function () {
           $scriptjs('lib/marked.min.js', function () {
             $scriptjs('lib/prettify.min.js', function () {

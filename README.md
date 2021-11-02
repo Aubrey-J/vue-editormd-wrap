@@ -14,7 +14,7 @@ npm i vue-editormd-wrap
 
 ## 导入静态资源
 https://github.com/Aubrey-J/vue-editormd-wrap
-中static下的editor-md文件夹放到项目中的static下，如静态资源路径不同，请参考下面配置的修改，以保证使用正常
+中static下的editor-md文件夹放到项目中的static下，如静态资源路径不同，请参考下面配置的修改，以保证使用正常，一定要是用该项目的static，因为katex.min的引入改为了本地静态资源，editor.md官网的static资源和该项目的不一样
 ## 使用
 ### 全局组件注册
 ```javascript
