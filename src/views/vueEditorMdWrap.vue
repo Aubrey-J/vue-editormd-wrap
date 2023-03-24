@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 编辑器 样式 -->
-    <link rel="stylesheet" href="./static/editor-md/css/editormd.min.css"/>
+    <link rel="stylesheet" :href="editorRootDir + 'css/editormd.min.css'"/>
     <!-- 编辑器 -->
     <div ref="container" :id="editorId" :class="editorContainerClass">
       <textarea style="display:none;" v-model="value"></textarea>
@@ -53,7 +53,8 @@ export default {
   data () {
     return {
       editor: null,
-      editorLoaded: false
+      editorLoaded: false,
+      editorRootDir: '/editor-md/'
     }
   },
   computed: {
@@ -113,9 +114,13 @@ export default {
   methods: {
     // 加载相关js
     fetchScript: async function () {
+      this.editorRootDir = this.config
+        ? this.config.path.substring(0, this.config.path.indexOf('lib/'))
+        : this.editorRootDir
+      window.EDITORMD_ROOT_CONFIG = this.editorRootDir
       return new Promise((resolve) => {
         // 按序加载js
-        $scriptjs.path('./static/editor-md/')
+        $scriptjs.path(this.editorRootDir)
         $scriptjs('jquery-3.6.0.min.js', function () {
           $scriptjs('lib/marked.min.js', function () {
             $scriptjs('lib/prettify.min.js', function () {
