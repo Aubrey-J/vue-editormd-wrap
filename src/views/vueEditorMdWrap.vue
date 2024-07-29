@@ -206,9 +206,11 @@ export default {
           if (this.editor) {
             this.editorLoaded = true
             // 初始赋值
-            setTimeout(() => {
-              this.editor.setMarkdown(this.value || '')
-            }, 1000)
+            if (!this.previewForHtml || !this.previewForHtml.showContext) {
+              setTimeout(() => {
+                this.editor.setMarkdown(this.value || '')
+              }, 1000)
+            }
             // 监听input时间 绑定model
             this.$refs.container.addEventListener('input', (a) => {
               this.$emit('input', this.editor.getMarkdown())
